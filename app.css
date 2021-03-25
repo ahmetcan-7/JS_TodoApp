@@ -6,7 +6,7 @@
 
 body{
     font-family: 'Poppins', sans-serif;
-    background-image: url(./img/todo_image.jpg);
+    background-image: url(/img/todo_image.jpg);
     background-size: cover;
     color: white;
     min-height: 100vh;
