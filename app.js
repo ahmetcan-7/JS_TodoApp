@@ -3,6 +3,7 @@ const todoBtn = document.querySelector(".todo-btn");
 const todoList = document.querySelector(".todo-list");
 const filterOption = document.querySelector(".filter-todo");
 
+
 todoBtn.addEventListener("click", addTodo);
 todoList.addEventListener("click", deleteCheck);
 filterOption.addEventListener("click", filterTodo);
@@ -40,14 +41,17 @@ function addTodo(event) {
 
 function deleteCheck(e) {
     const item = e.target;
-    console.log(item.classList)
+
 
     if (item.classList[0] === "delete-btn") {
 
         const todo = item.parentElement;
+
+
         todo.classList.add("fall");
         //delete local.stroge
-        deleteTodo(todo);
+        deleteLocalTodo(todo);
+        deleteLocalChecked(todo.innerText);
 
         todo.addEventListener("transitionend", () => {
             todo.remove();
@@ -61,6 +65,14 @@ function deleteCheck(e) {
 
         const todo = item.parentElement;
         todo.classList.toggle("completed");
+        const completedText = item.parentElement.firstChild.innerText;
+
+        if (todo.classList.contains("completed")) {
+
+            saveLocalChecked(completedText);
+        } else {
+            changeLocalChecked(completedText);
+        }
     }
 }
 
@@ -107,9 +119,37 @@ function saveLocalTodos(todo) {
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+function saveLocalChecked(text) {
+    let input;
+
+    if (localStorage.getItem("input") === null) {
+        input = [];
+    } else {
+        input = JSON.parse(localStorage.getItem("input"));
+    }
+
+    input.push(text);
+    localStorage.setItem("input", JSON.stringify(input));
+
+}
+
+function changeLocalChecked(text) {
+    let inputs = JSON.parse(localStorage.getItem("input"));
+
+    const checked = inputs.filter((input) => {
+        return input != text;
+    })
+
+
+    localStorage.setItem("input", JSON.stringify(checked));
+
+
+}
 
 function getTodos() {
     let todos;
+    let checkedInputs = JSON.parse(localStorage.getItem("input"));
+    let childs = todoList.childNodes;
 
     if (localStorage.getItem("todos") === null) {
         todos = [];
@@ -140,9 +180,20 @@ function getTodos() {
     });
 
 
+    childs.forEach((child) => {
+
+        for (i = 0; i < checkedInputs.length; i++) {
+            if (checkedInputs[i] == child.innerText) {
+                child.classList.add("completed");
+            }
+        }
+
+    });
+
+
 }
 
-function deleteTodo(todo) {
+function deleteLocalTodo(todo) {
     let todos;
 
     if (localStorage.getItem("todos") === null) {
@@ -156,6 +207,21 @@ function deleteTodo(todo) {
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+function deleteLocalChecked(todo) {
+    let input;
+
+    if (localStorage.getItem("input") === null) {
+        input = [];
+    } else {
+        input = JSON.parse(localStorage.getItem("input"));
+    }
 
 
 
+    if (input.includes(todo)) {
+        console.log(input.indexOf(todo));
+        input.splice(input.indexOf(todo), 1);
+    }
+
+    localStorage.setItem("input", JSON.stringify(input));
+}
