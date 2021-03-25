@@ -67,7 +67,6 @@ form button:hover{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.5s ease;
 }
 
 .todo-item{
