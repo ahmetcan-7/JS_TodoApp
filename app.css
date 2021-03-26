@@ -27,7 +27,7 @@ form input,form button{
     padding: 0.5rem;
     font-size: 1.3rem;
     background-color: white;
-    border: none;  /*borderını kaldırınca sanki iç ice gibi gozukuyolar*/
+    border: none;  
 }
 
 form input:focus,form button:focus,.checked-btn:focus,.delete-btn:focus{
@@ -67,6 +67,7 @@ form button:hover{
     display: flex;
     justify-content: space-between;
     align-items: center;
+   
 }
 
 .todo-item{
@@ -81,27 +82,28 @@ form button:hover{
     padding: 0.8rem;
     cursor: pointer;
     font-size: 0.8rem;
-
 }
 
 .checked-btn{
     background-color: rgb(28, 165, 165);
 }
 
-/*image lara tıkladıgıma sorununu cozmek icin*/
+
 
 .fa-trash,.fa-check{
     pointer-events: none;
 }
 
 .completed{
-    text-decoration: line-through;
     opacity: 0.5;
+    text-decoration: line-through;
 }
+
 
 .fall{
     transform: translateY(8rem) rotateZ(20deg);
     opacity: 0;
+    transition: all 0.5s ease;
 
 }
 
