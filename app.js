@@ -225,3 +225,6 @@ function deleteLocalChecked(todo) {
 
     localStorage.setItem("input", JSON.stringify(input));
 }
+
+
+
